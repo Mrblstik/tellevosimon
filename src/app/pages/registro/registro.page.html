@@ -1,0 +1,84 @@
+<ion-content class="ion-padding fondo-registro">
+  <div class="contenedor-registro">
+    <ion-card class="tarjeta-registro">
+      <ion-card-header class="header-registro">
+        <ion-card-title>Crear una cuenta</ion-card-title>
+        <p>Regístrate para continuar</p>
+      </ion-card-header>
+
+      <ion-card-content>
+        <form (ngSubmit)="registro()" [formGroup]="form" (keypress.enter)="registro()">
+          <!-- Campo de correo electrónico -->
+          <ion-item class="campo-input" lines="none">
+            <ion-label position="stacked">Correo electrónico</ion-label>
+            <ion-input 
+              type="email" 
+              formControlName="email" 
+              placeholder="ejemplo@duocuc.cl">
+            </ion-input>
+          </ion-item>
+          <div class="validator" *ngIf="form.controls.email.errors && form.controls.email.touched">
+            <ion-text color="danger">
+              <div *ngIf="form.controls.email.errors?.['required']" class="ion-text-center">El correo es requerido</div>
+              <div *ngIf="form.controls.email.errors?.['email']" class="ion-text-center">Ingrese un correo válido</div>
+              <div *ngIf="form.get('email')?.errors?.['invalidDomain']" class="ion-text-center">El correo debe terminar en &#64;duocuc.cl.</div>
+            </ion-text>
+          </div>
+
+          <!-- Campo de contraseña -->
+          <ion-item class="campo-input" lines="none">
+            <ion-label position="stacked">Contraseña</ion-label>
+            <ion-input 
+              type="password" 
+              formControlName="password">
+            </ion-input>
+          </ion-item>
+          <div class="validator" *ngIf="form.controls.password.errors && form.controls.password.touched">
+            <ion-text color="danger">
+              <div *ngIf="form.controls.password.errors?.['required']" class="ion-text-center">La contraseña es requerida</div>
+            </ion-text>
+          </div>
+
+          <!-- Campo de nombre -->
+          <ion-item class="campo-input" lines="none">
+            <ion-label position="stacked">Nombre</ion-label>
+            <ion-input 
+              type="text" 
+              formControlName="name" 
+              placeholder="Tu nombre">
+            </ion-input>
+          </ion-item>
+          <div class="validator" *ngIf="form.controls.name.errors && form.controls.name.touched">
+            <ion-text color="danger">
+              <div *ngIf="form.controls.name.errors?.['required']" class="ion-text-center">El nombre es requerido</div>
+            </ion-text>
+          </div>
+
+          <!-- Campo de apellido -->
+          <ion-item class="campo-input" lines="none">
+            <ion-label position="stacked">Apellido</ion-label>
+            <ion-input 
+              type="text" 
+              formControlName="lastname" 
+              placeholder="Tu apellido">
+            </ion-input>
+          </ion-item>
+          <div class="validator" *ngIf="form.controls.lastname.errors && form.controls.lastname.touched">
+            <ion-text color="danger">
+              <div *ngIf="form.controls.lastname.errors?.['required']" class="ion-text-center">El apellido es requerido</div>
+            </ion-text>
+          </div>
+
+          <!-- Botón de registro -->
+          <ion-button 
+            expand="block" 
+            type="submit" 
+            [disabled]="form.invalid" 
+            class="boton-principal">
+            Registrarse
+          </ion-button>
+        </form>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>

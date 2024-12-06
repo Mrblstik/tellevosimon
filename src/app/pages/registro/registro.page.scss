@@ -1,0 +1,53 @@
+.fondo-registro {
+    --background: var(--ion-background-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+  }
+  
+  .contenedor-registro {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
+  
+  .tarjeta-registro {
+    width: 90%;
+    max-width: 400px;
+    border-radius: 15px;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.4);
+    background: var(--ion-card-background, #ffffff);
+  }
+  
+  .header-registro {
+    text-align: center;
+    padding: 20px;
+    background: var(--ion-color-primary-shade, #3a6073);
+    color: var(--ion-color-light, #ffffff);
+    border-radius: 15px 15px 0 0;
+  }
+  
+  .header-registro p {
+    margin-top: 4px;
+    font-size: 0.9em;
+    color: var(--ion-color-medium, #b0c4de);
+  }
+  
+  .campo-input {
+    margin-bottom: 12px;
+    border-radius: 8px;
+    background: var(--ion-item-background, #f0f0f0);
+    color: var(--ion-text-color, #333);
+  }
+  
+  .boton-principal {
+    margin-top: 10px;
+    font-weight: bold;
+    color: var(--ion-color-light, #ffffff);
+    border-radius: 8px;
+    background: var(--ion-color-primary, #3a6073);
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+  }
+  

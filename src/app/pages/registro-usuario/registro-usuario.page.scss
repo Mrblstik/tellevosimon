@@ -1,0 +1,64 @@
+/* Fondo general para la sección */
+.fondo-registro {
+    --background: var(--ion-background-color);
+  }
+  
+  /* Contenedor del formulario */
+  .contenedor-registro {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    padding: 16px;
+  }
+  
+  /* Tarjeta principal del formulario */
+  .tarjeta-registro {
+    width: 100%;
+    max-width: 400px;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    background-color: var(--ion-card-background);
+  }
+  
+  /* Título de la tarjeta */
+  .titulo-registro {
+    font-size: 1.4rem;
+    font-weight: bold;
+    text-align: center;
+    color: var(--ion-color-primary);
+    margin-bottom: 8px;
+  }
+  
+  /* Estilo de los ítems del formulario */
+  .input-item {
+    margin-top: 12px;
+    --highlight-color-focused: var(--ion-color-primary);
+  }
+  
+  /* Botón de registro */
+  .boton-registro {
+    margin-top: 20px;
+    font-size: 1rem;
+    font-weight: bold;
+    --background: var(--ion-color-primary);
+    --background-hover: var(--ion-color-primary-shade);
+    --color: white;
+    border-radius: 8px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s ease-in-out;
+  }
+  
+  .boton-registro:hover {
+    transform: scale(1.05);
+  }
+  
+  /* Modo oscuro */
+  :host(.ion-color-scheme-dark) {
+    --ion-background-color: #1e1e1e;
+    --ion-card-background: #2a2a2a;
+    --ion-color-primary: #4e8fff;
+    --ion-color-primary-shade: #3a6ccc;
+    --ion-label-color: #f4f4f4;
+  }
+  

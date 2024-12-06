@@ -1,0 +1,91 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Confirmar Viaje</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding" style="background: linear-gradient(to bottom, #3A6073, #16222A); color: white; padding-top: 10px;">
+
+  <!-- Tarjeta con detalles del viaje -->
+  <ion-card class="viaje-card" style="border-radius: 15px; box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2); background: #364F6B;">
+    <ion-card-header style="background: #2C5364; color: white; border-radius: 15px 15px 0 0; padding: 20px;">
+      <ion-card-title style="font-size: 1.6em; font-weight: bold; text-align: center;">
+        {{ viaje?.destino }}
+      </ion-card-title>
+      <ion-card-subtitle style="font-size: 1.1em; text-align: center;">
+        <p>Fecha: {{ viaje?.horaSalida | date: 'dd/MM/yyyy' }}</p>
+        <p>Hora: {{ viaje?.horaSalida | date: 'HH:mm' }}</p>  
+      </ion-card-subtitle>
+    </ion-card-header>
+
+    <ion-card-content style="padding: 15px;">
+      <ion-text color="white" style="margin-bottom: 10px;">
+        <p><strong>Conductor:</strong> {{ conductor?.name }} {{ conductor?.lastname }}</p>
+        <p><strong>Vehículo:</strong> {{ vehiculo?.marca }} {{ vehiculo?.modelo }} {{ vehiculo?.patente }}</p>
+      </ion-text>
+      
+      <ion-text color="primary" style="margin-bottom: 20px;">
+        <p><strong>Asientos disponibles:</strong> {{ viaje?.asientos }}</p>
+      </ion-text>
+
+      <!-- Información del costo -->
+      <ion-item lines="none" style="background: #2C5364; border-radius: 8px; margin-bottom: 15px;">
+        <ion-label style="color: #b0c4de;">Costo:</ion-label>
+        <div style="color: white; font-weight: bold;">{{ viaje?.costo | currency }}</div>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Botones de Cancelar y Confirmar -->
+  <div class="button-group" style="padding: 15px;">
+    
+    <!-- Botón de "Ver Mapa" al final, pero ahora primero -->
+    <ion-button expand="block" *ngIf="reservado" (click)="verMapa(id)" style="border-radius: 10px; font-weight: bold; background: #364F6B; color: white; margin-bottom: 10px;">
+      Ver Mapa
+    </ion-button>
+
+    <!-- Botón de "Confirmar" al segundo lugar -->
+    <ion-button expand="block" [color]="reservado ? 'danger' : 'primary'" 
+      (click)="reservado ? cancelarReserva() : confirmar()" class="confirm-button" style="border-radius: 10px; font-weight: bold;">
+      {{ reservado ? 'Cancelar Reserva' : 'Confirmar' }}
+    </ion-button>
+
+    <!-- Botón de "Cancelar" al último lugar -->
+    <ion-button expand="block" color="danger" routerLink="/lista-viajes" class="cancel-button" style="border-radius: 10px; margin-top: 10px; font-weight: bold;">
+      Cancelar
+    </ion-button>
+
+  </div>
+
+</ion-content>
+
+<style>
+  .viaje-card {
+    transition: transform 0.3s ease;
+  }
+  
+  .viaje-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0px 20px 30px rgba(0, 0, 0, 0.3);
+  }
+
+  .button-group ion-button {
+    font-size: 1.2em;
+    border-radius: 12px;
+  }
+
+  .cancel-button {
+    background: #d9534f;
+    color: white;
+  }
+
+  .confirm-button {
+    background: #2C5364;
+    color: white;
+  }
+
+  .button-group ion-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.2);
+  }
+</style>

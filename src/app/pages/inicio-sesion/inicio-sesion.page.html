@@ -1,0 +1,68 @@
+<ion-content class="ion-padding fondo-inicio-sesion">
+  <div class="contenedor-inicio-sesion">
+    <ion-card class="tarjeta-inicio-sesion">
+      <ion-card-header class="header-inicio-sesion">
+        <ion-card-title>Bienvenido de nuevo</ion-card-title>
+        <p>Inicia sesión para continuar</p>
+      </ion-card-header>
+
+      <ion-card-content>
+        <form (ngSubmit)="iniciarSesion()" [formGroup]="form">
+          <!-- Campo de correo electrónico -->
+          <ion-item class="campo-input" lines="none">
+            <ion-label position="stacked">Correo electrónico</ion-label>
+            <ion-input 
+              formControlName="email" 
+              type="email" 
+              placeholder="ejemplo@duocuc.cl">
+            </ion-input>
+          </ion-item>
+          <div class="validator" *ngIf="form.controls.email.errors && form.controls.email.touched">
+            <ion-text color="danger">
+              <p *ngIf="form.controls.email.errors?.['required']">El correo es requerido</p>
+              <p *ngIf="form.controls.email.errors?.['email']">Ingrese un correo válido</p>
+            </ion-text>
+          </div>
+
+          <!-- Campo de contraseña -->
+          <ion-item class="campo-input" lines="none">
+            <ion-label position="stacked">Contraseña</ion-label>
+            <ion-input 
+              formControlName="password" 
+              type="password">
+            </ion-input>
+          </ion-item>
+          <div class="validator" *ngIf="form.controls.password.errors && form.controls.password.touched">
+            <ion-text color="danger">
+              <p *ngIf="form.controls.password.errors?.['required']">La contraseña es requerida</p>
+            </ion-text>
+          </div>
+
+          <!-- Botón para iniciar sesión -->
+          <ion-button 
+            expand="block" 
+            type="submit" 
+            [disabled]="form.invalid" 
+            class="boton-principal">
+            Iniciar sesión
+          </ion-button>
+
+          <!-- Botón para registrarse -->
+          <ion-button 
+            routerLink="/registro" 
+            expand="block" 
+            class="boton-secundario">
+            Registrarse
+          </ion-button>
+
+          <!-- Enlace para restablecer contraseña -->
+          <ion-text class="ion-padding" routerLink="/restablecer-contrasena">
+            <p class="ion-text-center enlace-recuperar">
+              ¿Olvidaste tu contraseña?
+            </p>
+          </ion-text>
+        </form>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>

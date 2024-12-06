@@ -1,0 +1,38 @@
+<ion-content class="ion-padding fondo-registro" mode="ios">
+  <div class="contenedor-registro">
+    <ion-card class="tarjeta-registro">
+      <ion-card-header>
+        <ion-card-title class="titulo-registro">Registro de Vehículo</ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content>
+        <form (ngSubmit)="registrarVehiculo()" [formGroup]="formularioRegistroVehiculo">
+          
+          <ion-item class="input-item" lines="none">
+            <ion-label for="patente" position="stacked">Patente</ion-label>
+            <ion-input id="patente" formControlName="patente" placeholder="Ingresa la patente"></ion-input>
+          </ion-item>
+
+          <ion-item class="input-item" lines="none">
+            <ion-label for="marca" position="stacked">Marca</ion-label>
+            <ion-input id="marca" formControlName="marca" placeholder="Ingresa la marca"></ion-input>
+          </ion-item>
+
+          <ion-item class="input-item" lines="none">
+            <ion-label for="modelo" position="stacked">Modelo</ion-label>
+            <ion-input id="modelo" formControlName="modelo" placeholder="Ingresa el modelo"></ion-input>
+          </ion-item>
+
+          <ion-item class="input-item" lines="none">
+            <ion-label for="anio" position="stacked">Año</ion-label>
+            <ion-input id="anio" formControlName="anio" type="number" placeholder="Ingresa el año"></ion-input>
+          </ion-item>
+
+          <ion-button expand="block" type="submit" class="boton-registro" routerLink="/perfil-usuario">
+            Registrar
+          </ion-button>
+        </form>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>

@@ -1,0 +1,68 @@
+/* Estilo para el contenedor general */
+ion-content {
+    --background: var(--ion-background-color);
+  }
+  
+  /* Estilo para el card de bienvenida */
+  .welcome-card {
+    margin: 16px;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+  }
+  
+  .welcome-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--ion-color-primary);
+  }
+  
+  .welcome-text {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--ion-text-color);
+  }
+  
+  /* Contenedor de botones */
+  .button-container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin: 24px 16px;
+  }
+  
+  /* Botones personalizados */
+  .custom-button {
+    --background: var(--ion-color-primary);
+    --background-activated: var(--ion-color-primary-shade);
+    --color: white;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border-radius: 10px;
+    text-transform: none;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  }
+  
+  .custom-button:hover {
+    transform: scale(1.05);
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .available-trips {
+    --background: var(--ion-color-success);
+  }
+  
+  .schedule-trip {
+    --background: var(--ion-color-tertiary);
+  }
+  
+  /* Adaptación para el modo oscuro */
+  :host(.ion-color-scheme-dark) {
+    --ion-text-color: #f4f4f4;
+    --ion-background-color: #1e1e1e;
+    --ion-color-primary: #4e8fff;
+    --ion-color-primary-shade: #3a6ccc;
+    --ion-color-success: #5cb85c;
+    --ion-color-tertiary: #7b52d3;
+  }
+  

@@ -1,0 +1,67 @@
+/* Fondo general para el historial */
+.fondo-historial {
+    --background: var(--ion-background-color);
+  }
+  
+  /* Contenedor principal */
+  .contenedor-historial {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    padding: 16px;
+  }
+  
+  /* Tarjeta principal */
+  .tarjeta-historial {
+    width: 100%;
+    max-width: 500px;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    background-color: var(--ion-card-background);
+  }
+  
+  /* Título de la tarjeta */
+  .titulo-historial {
+    font-size: 1.4rem;
+    font-weight: bold;
+    text-align: center;
+    color: var(--ion-color-primary);
+    margin-bottom: 8px;
+  }
+  
+  /* Lista del historial */
+  .lista-historial {
+    margin-top: 10px;
+    padding: 0;
+  }
+  
+  /* Elementos individuales del historial */
+  .item-historial {
+    margin-bottom: 10px;
+    border-radius: 10px;
+    --background: var(--ion-item-background, var(--ion-card-background));
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  }
+  
+  .item-historial:hover {
+    transform: scale(1.02);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Fecha en los elementos */
+  .fecha-historial {
+    font-weight: bold;
+    color: var(--ion-color-primary);
+  }
+  
+  /* Modo oscuro */
+  :host(.ion-color-scheme-dark) {
+    --ion-background-color: #1e1e1e;
+    --ion-card-background: #2a2a2a;
+    --ion-color-primary: #4e8fff;
+    --ion-item-background: #333333;
+    --ion-text-color: #f4f4f4;
+  }
+  

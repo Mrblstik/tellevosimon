@@ -1,0 +1,59 @@
+<ion-content class="ion-padding fondo-perfil" mode="ios" style="background: linear-gradient(to bottom, #3A6073, #16222A); color: white;">
+
+  <div class="contenedor-perfil" style="display: flex; justify-content: center; align-items: center; height: 100%; padding-top: 20px;">
+
+    <!-- Tarjeta del perfil -->
+    <ion-card class="tarjeta-perfil" style="width: 90%; max-width: 400px; border-radius: 20px; background: #2C3E50; box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.2);">
+      <ion-card-header style="text-align: center; background: #1A252F; border-radius: 20px 20px 0 0; padding: 25px;">
+        <ion-card-title style="font-size: 1.8em; font-weight: bold; color: #FFFFFF;">
+          {{ userData.name }} {{ userData.lastname }}
+        </ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content style="padding: 25px; color: #B0BEC5;">
+        <p style="font-size: 1.2em;">Email: <strong>{{ userData.email }}</strong></p>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Lista de opciones -->
+    <ion-list style="margin-top: 30px; width: 100%; max-width: 400px;">
+      
+      <ion-item button (click)="verHistorial()" style="background: #2C3E50; border-radius: 15px; padding: 15px; box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.2); transition: background-color 0.3s ease;">
+        <ion-label style="color: #B0BEC5; font-size: 1.2em; font-weight: bold;">Historial</ion-label>
+      </ion-item>
+
+    </ion-list>
+
+  </div>
+
+</ion-content>
+
+<style>
+  .tarjeta-perfil {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .tarjeta-perfil:hover {
+    transform: scale(1.05);
+    box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.3);
+  }
+
+  ion-item {
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  ion-item:hover {
+    background: #1A252F;
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
+  }
+
+  .contenedor-perfil {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .ion-label {
+    font-size: 1.2em;
+  }
+</style>
