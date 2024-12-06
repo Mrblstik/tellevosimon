@@ -17,50 +17,31 @@ export class ConfirmacionPage implements OnInit {
   id: any;
   conductor: any;
   vehiculo: any;
-  reservado: boolean = false; 
+  reservado: boolean = false; // Estado de la reserva
 
   constructor(private router: Router, private platform: Platform) { }
   firebaseSvc = inject(FirebaseService);
   utils = inject(UtilsService);
   chat = inject(ChatService);
   ngOnInit() {
-    if (this.checkNetwork()) {
-      this.cargarDatos();
-    } else {
-      this.sinInternet();
-    }
+    this.cargarDatos();
   }
 
   ionViewWillEnter() {
-    if (this.checkNetwork) {
-      this.cargarDatos();
-    } 
-    else {
-      this.sinInternet();
-    }
-  }
-  async checkNetwork() {
-    return (await Network.getStatus()).connected;
-  }
-  sinInternet() {
-    this.checkReserva();
-    this.conductor = this.utils.getFromlocalStorage('conductor');
-    this.vehiculo = this.utils.getFromlocalStorage('vehiculo');
-    this.viaje = this.utils.getFromlocalStorage('viaje');
+    this.cargarDatos();
   }
   async cargarDatos() {
     let xtras = this.router.getCurrentNavigation()?.extras.state;
     if (xtras !== undefined) {
       this.id = xtras["id"];
-      await this.utils.presentLoading(); 
+      await this.utils.presentLoading(); // Mostrar loading al iniciar
       try {
         this.conductor = await this.firebaseSvc.getDocument('users/' + this.id);
         await this.utils.presentToast({
-          message: "La información del conductor ha sido cargada",
+          message: "Datos del conductor cargados.",
           duration: 3000,
           color: 'success',
           position: 'top',
-          icon:'circle-outline'
         });
 
         this.firebaseSvc.obtenerVehiculoPorUserId(this.id).subscribe((vehiculos) => {
@@ -70,9 +51,9 @@ export class ConfirmacionPage implements OnInit {
         const path = `viajes/${this.id}`;
         this.firebaseSvc.getRealtimeData(path).subscribe({
           next: async (viaje) => {
-            this.viaje = viaje; 
+            this.viaje = viaje; // Update the trip data in real time
             await this.utils.presentToast({
-              message: "La información del viaje ha sido actualizada",
+              message: "Datos del viaje actualizados.",
               duration: 3000,
               color: 'primary',
               position: 'top',
@@ -87,16 +68,19 @@ export class ConfirmacionPage implements OnInit {
             });
           },
         });
-        await this.checkReserva(); 
+        await this.checkReserva(); // Verificar reserva al cargar el viaje
       } catch (error) {
         await this.utils.presentToast({
-          message: "Error al cargar los datos del conductor.",
+          message: "No tienes conexion a internet",
           duration: 3000,
           color: 'danger',
           position: 'top',
         });
+        this.viaje = this.utils.getFromlocalStorage('viaje');
+        this.conductor = this.utils.getFromlocalStorage('conductor');
+        this.vehiculo = this.utils.getFromlocalStorage('vehiculo');
       } finally {
-        await this.utils.dismissLoading(); 
+        await this.utils.dismissLoading(); // Ocultar loading
       }
     }
   }
@@ -110,15 +94,15 @@ export class ConfirmacionPage implements OnInit {
           if (reservaDoc) {
             this.reservado = true;
             await this.utils.presentToast({
-              message: "Reserva exitosa",
+              message: "Reserva encontrada.",
               duration: 3000,
-              color: 'primary',
+              color: 'success',
               position: 'top',
             });
           } else {
             this.reservado = false;
             await this.utils.presentToast({
-              message: "No tienes alguna reserva activa.",
+              message: "No tienes una reserva activa.",
               duration: 3000,
               color: 'warning',
               position: 'top',
@@ -128,7 +112,7 @@ export class ConfirmacionPage implements OnInit {
         error: async (error) => {
           this.reservado = false;
           await this.utils.presentToast({
-            message: "Error en la reserva",
+            message: "Error al verificar la reserva. Intenta nuevamente.",
             duration: 3000,
             color: 'danger',
             position: 'top',
@@ -138,7 +122,7 @@ export class ConfirmacionPage implements OnInit {
     } catch (error) {
       this.reservado = false;
       await this.utils.presentToast({
-        message: "Error en la reserva",
+        message: "Error inesperado al verificar la reserva.",
         duration: 3000,
         color: 'danger',
         position: 'top',
@@ -151,7 +135,7 @@ export class ConfirmacionPage implements OnInit {
     const userId = user.uid;
     if (this.conductor && this.conductor.uid === userId) {
       await this.utils.presentToast({
-        message: "No puedes reservar tu propio viaje",
+        message: "No puedes reservar tu propio viaje.",
         duration: 5000,
         color: 'primary',
         position: 'top',
@@ -201,7 +185,7 @@ export class ConfirmacionPage implements OnInit {
         }
       } else {
         await this.utils.presentToast({
-          message: "La información del viaje es inválida o no hay asientos disponibles",
+          message: "Datos de viaje inválidos o sin asientos disponibles.",
           duration: 3000,
           color: 'warning',
           position: 'top',
@@ -213,7 +197,6 @@ export class ConfirmacionPage implements OnInit {
         duration: 3000,
         color: 'warning',
         position: 'top',
-        icon:'planet-outline'
       });
     }
   }
@@ -234,9 +217,9 @@ export class ConfirmacionPage implements OnInit {
         await this.firebaseSvc.deleteRealtimeData(`/users/${userId}/reservas/${viajeId}`);
         await this.firebaseSvc.updateRealtimeData(path, { asientos: updatedAsientos });
         this.reservado = false;
-        this.chat.sendMessage(viajeId, 'Sistema', `Reserva cancelada por ${user.displayName}`);
+        this.chat.sendMessage(viajeId, 'Sistema', `¡Reserva cancelada por ${user.displayName}!`);
         await this.utils.presentToast({
-          message: "Se a cancelado su reserva",
+          message: "Reserva cancelada.",
           duration: 5000,
           color: 'primary',
           position: 'top',
@@ -258,7 +241,6 @@ export class ConfirmacionPage implements OnInit {
         duration: 3000,
         color: 'warning',
         position: 'top',
-        icon:'planet-outline'
       });
     }
   }
@@ -277,7 +259,6 @@ export class ConfirmacionPage implements OnInit {
         duration: 3000,
         color: 'warning',
         position: 'top',
-        icon:'planet-outline'
       });
     }
   }
