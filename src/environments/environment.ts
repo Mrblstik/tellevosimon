@@ -7,14 +7,14 @@ import { getMessaging } from "firebase/messaging";
 export const environment = {
   production: false,
   firebaseConfig : {
-    apiKey: "AIzaSyAHHPXjkQAV07H-2yh30YJepxqA4_ltg-8",
-    authDomain: "trabajo-del-apileo-221b4.firebaseapp.com",
-    databaseURL: "https://trabajo-del-apileo-221b4-default-rtdb.firebaseio.com",
-    projectId: "trabajo-del-apileo-221b4",
-    storageBucket: "trabajo-del-apileo-221b4.firebasestorage.app",
-    messagingSenderId: "893798233446",
-    appId: "1:893798233446:web:7adce1ed3b4de9225604a7",
-    measurementId: "G-MYVCGE9M4S"
+    apiKey: "AIzaSyDpsCVpnqYTz9GJz2OsB00YLTb629hF1sA",
+    authDomain: "saimon-40d88.firebaseapp.com",
+    databaseURL: "https://saimon-40d88-default-rtdb.firebaseio.com",
+    projectId: "saimon-40d88",
+    storageBucket: "saimon-40d88.firebasestorage.app",
+    messagingSenderId: "831878044328",
+    appId: "1:831878044328:web:370bf424462b4f68e0409d",
+    measurementId: "G-6T4CY99VM0"
   }
 };
 const app = initializeApp(environment.firebaseConfig);
