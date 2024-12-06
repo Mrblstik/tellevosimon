@@ -27,7 +27,7 @@ export class ListaViajesPage implements OnInit {
   }
 
   ionViewWillEnter() {
-    // Recargar los datos al volver a la vista
+    
     if (this.checkNetwork) {
       this.obtenerViajes();
     } else {
@@ -47,12 +47,12 @@ export class ListaViajesPage implements OnInit {
     try {
       this.firebaseSvc.realtime
         .list('viajes')
-        .snapshotChanges() // Listen to the real-time changes
+        .snapshotChanges() 
         .subscribe((querySnapshot) => {
-          this.viajes = []; // Reinicia el array en cada carga
+          this.viajes = []; 
           querySnapshot.forEach((action) => {
-            const key = action.key; // Get the unique key of each node
-            const data = action.payload.val(); // Retrieve the value (data)
+            const key = action.key; 
+            const data = action.payload.val(); 
 
             if (data && typeof data === 'object') {
               this.viajes.push({ id: key, ...data });
@@ -60,14 +60,14 @@ export class ListaViajesPage implements OnInit {
           });
         });
     } catch (error) {
-      console.error('Error al obtener los viajes:', error);
+      console.error('Error al cargar los viajes:', error);
     } finally {
-      loading.dismiss(); // Asegúrate de que el loading se cierra independientemente del resultado
+      loading.dismiss(); 
     }
   }
 
   async verViaje(id: string) {
-    const loading = await this.utils.loading(); // Mostrar loading al navegar
+    const loading = await this.utils.loading(); 
     loading.present();
     console.log(id);
 
@@ -77,16 +77,15 @@ export class ListaViajesPage implements OnInit {
       }
     };
 
-    // Usar el objeto `xtras` dentro de `navigate`
+    
     this.router.navigate(['confirmacion'], xtras).then(() => {
-      loading.dismiss(); // Ocultar loading después de la navegación
+      loading.dismiss(); 
     }).catch(() => {
-      loading.dismiss(); // Asegúrate de ocultar el loading en caso de error
+      loading.dismiss(); 
     });
   }
 
-  // Método para ir al chat
   irAlChat(viajeId: string) {
-    this.router.navigate(['chat', { id: viajeId }]); // Navegar al chat con el ID del viaje
+    this.router.navigate(['chat', { id: viajeId }]); 
   }
 }

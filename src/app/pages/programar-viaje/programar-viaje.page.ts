@@ -1,10 +1,10 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FirebaseService } from 'src/app/services/firebase.service';
 import { UtilsService } from 'src/app/services/utils.service';
-import * as mapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 import { Router } from '@angular/router';
 import { ChatService } from 'src/app/services/chat.service';
+import * as mapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 
 @Component({
   selector: 'app-programar-viaje',
@@ -12,78 +12,88 @@ import { ChatService } from 'src/app/services/chat.service';
   styleUrls: ['./programar-viaje.page.scss'],
 })
 export class ProgramarViajePage implements OnInit {
-  formularioViaje!: FormGroup;
-  currentLocation: { lat: number, lng: number } | null = null;
+  formularioViaje: FormGroup;
+  currentLocation: { lat: number; lng: number } | null = null;
 
-  constructor(private fb: FormBuilder, private router: Router) { }
-  firebaseSvc = inject(FirebaseService);
-  utilsSvc = inject(UtilsService);
-  chat = inject(ChatService);
-  ngOnInit() {
-    this.formularioViaje = this.fb.group({
+  constructor(
+    private formBuilder: FormBuilder,
+    private router: Router,
+    private firebaseService: FirebaseService,
+    private utilsService: UtilsService,
+    private chatService: ChatService
+  ) {
+    this.formularioViaje = this.crearFormulario();
+  }
+
+  ngOnInit(): void {
+    this.configurarGeocoder();
+    this.obtenerUbicacionActual();
+  }
+
+  private crearFormulario(): FormGroup {
+    return this.formBuilder.group({
       horaSalida: [new Date().toISOString(), Validators.required],
-      destino: ['', [Validators.required]],
+      destino: ['', Validators.required],
       costo: ['', [Validators.required, Validators.min(1)]],
-      latitud: ['', Validators.required],  // Store latitude
-      longitud: ['', Validators.required], // Store longitude
+      latitud: ['', Validators.required],
+      longitud: ['', Validators.required],
       asientos: [1, [Validators.required, Validators.min(1)]],
     });
-
-    this.initializeGeocoder();
-    this.getCurrentLocation();  // Get the current location
   }
 
-  // Function to get the current geographic location
-  getCurrentLocation() {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const { latitude, longitude } = position.coords;
-          this.currentLocation = { lat: latitude, lng: longitude };
-
-          // Set the initial coordinates in the form
-          this.formularioViaje.controls['latitud'].setValue(latitude);
-          this.formularioViaje.controls['longitud'].setValue(longitude);
-        },
-        (error) => {
-          console.error('Error getting location:', error);
-          // You can provide a fallback or error handling here if needed
-        }
-      );
-    } else {
-      console.error('Geolocation is not supported by this browser.');
+  private obtenerUbicacionActual(): void {
+    if (!navigator.geolocation) {
+      console.error('Geolocalización no está soportada por este navegador.');
+      return;
     }
-  }
 
-  // Function to handle confirming the trip
-  async confirmarViaje() {
-    if (this.formularioViaje.valid) {
-      const loading = await this.utilsSvc.loading();
-      await loading.present();
-      let user = (await this.firebaseSvc.getCurrentUser()).uid;
-      this.chat.deleteChat(user);
-      try {
-        const user = await this.firebaseSvc.auth.currentUser;
-        if (user) {
-          const viajeData = {
-            ...this.formularioViaje.value,
-            ubicacionActual: this.currentLocation, // Include the current location
-          };
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const { latitude, longitude } = position.coords;
+        this.currentLocation = { lat: latitude, lng: longitude };
 
-          const path = `viajes/${user.uid}`;
-          await this.firebaseSvc.setRealtimeData(path, viajeData); // Save the trip data
-        }
-      } catch (error) {
-        console.error('Error confirming trip:', error);
-      } finally {
-        loading.dismiss();
-        this.router.navigate(['/home']);
+        this.formularioViaje.patchValue({
+          latitud: latitude,
+          longitud: longitude,
+        });
+      },
+      (error) => {
+        console.error('Error al obtener la ubicación:', error);
       }
+    );
+  }
+
+  async confirmarViaje(): Promise<void> {
+    if (!this.formularioViaje.valid) {
+      return;
+    }
+
+    const loading = await this.utilsService.loading();
+    await loading.present();
+
+    try {
+      const usuarioActual = await this.firebaseService.auth.currentUser;
+
+      if (usuarioActual) {
+        const viajeData = {
+          ...this.formularioViaje.value,
+          ubicacionActual: this.currentLocation,
+        };
+
+        const path = `viajes/${usuarioActual.uid}`;
+        await this.firebaseService.setRealtimeData(path, viajeData);
+        this.chatService.deleteChat(usuarioActual.uid);
+      }
+    } catch (error) {
+      console.error('Error al confirmar el viaje:', error);
+    } finally {
+      loading.dismiss();
+      this.router.navigate(['/home']);
     }
   }
 
-  initializeGeocoder() {
-    mapboxGeocoder.accessToken = 'pk.eyJ1IjoiZi1jLXUiLCJhIjoiY200YWt4OWR6MDEzbzJrbXpmeG11azRmZSJ9.CF9dLV9uCV3lC-FdxiTzew'; // Your Mapbox Token
+  private configurarGeocoder(): void {
+    mapboxGeocoder.accessToken = 'pk.eyJ1IjoiZi1jLXUiLCJhIjoiY200YWt4OWR6MDEzbzJrbXpmeG11azRmZSJ9.CF9dLV9uCV3lC-FdxiTzew';
 
     const geocoder = new mapboxGeocoder({
       accessToken: mapboxGeocoder.accessToken,
@@ -91,19 +101,18 @@ export class ProgramarViajePage implements OnInit {
       mapboxgl: mapboxGeocoder,
     });
 
-    const geocoderContainer = document.getElementById('geocoder');
-    if (geocoderContainer) {
-      geocoderContainer.appendChild(geocoder.onAdd());
+    const contenedorGeocoder = document.getElementById('geocoder');
+    if (contenedorGeocoder) {
+      contenedorGeocoder.appendChild(geocoder.onAdd());
     }
 
-    geocoder.on('result', (e) => {
-      const lngLat = e.result.geometry.coordinates;
-      this.formularioViaje.controls['destino'].setValue(e.result.place_name);
-
-      // Update the form with the selected destination latitude and longitude
-      this.formularioViaje.controls['latitud'].setValue(lngLat[1]);
-      this.formularioViaje.controls['longitud'].setValue(lngLat[0]);
+    geocoder.on('result', (event) => {
+      const { coordinates } = event.result.geometry;
+      this.formularioViaje.patchValue({
+        destino: event.result.place_name,
+        latitud: coordinates[1],
+        longitud: coordinates[0],
+      });
     });
   }
 }
-

@@ -42,10 +42,10 @@ export class MapPage implements OnInit {
 
   ngOnDestroy() {
     if (this.map) {
-      this.map.remove(); // Libera recursos al destruir la página
+      this.map.remove(); 
     }
     if (this.locationWatcher) {
-      Geolocation.clearWatch({ id: this.locationWatcher }); // Limpiar el watcher al destruir el componente
+      Geolocation.clearWatch({ id: this.locationWatcher }); 
     }
   }
 
@@ -69,7 +69,7 @@ export class MapPage implements OnInit {
       const path = `viajes/${this.id}`;
       this.firebaseSvc.getRealtimeData(path).subscribe((doc) => {
         this.viaje = doc;
-        console.log('Datos del viaje cargados:', this.viaje); // Verifica los datos del viaje
+        console.log('Datos del viaje cargados:', this.viaje); 
         if (!this.map) {
           this.initializeMap();
         }

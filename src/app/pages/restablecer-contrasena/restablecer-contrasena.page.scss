@@ -1,103 +1,143 @@
-.fondo-restablecer {
-    --background: #f0f0f5;
-}
-
-.contenedor-restablecer {
+:root {
+    /* Modo claro */
+    --color-fondo: #f4f4f4;
+    --color-tarjeta: #ffffff;
+    --color-texto: #333333;
+    --color-subtitulo: #555555;
+    --color-boton: #4caf50;
+    --color-boton-texto: #ffffff;
+    --color-enlace: #007bff;
+  }
+  
+  @media (prefers-color-scheme: dark) {
+    :root {
+      /* Modo oscuro */
+      --color-fondo: #121212;
+      --color-tarjeta: #1e1e1e;
+      --color-texto: #e0e0e0;
+      --color-subtitulo: #b0b0b0;
+      --color-boton: #388e3c;
+      --color-boton-texto: #ffffff;
+      --color-enlace: #64b5f6;
+    }
+  }
+  
+  body, ion-content {
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+    background-color: var(--color-fondo);
+  }
+  
+  .fondo-restablecer {
     display: flex;
-    flex-direction: column;
     justify-content: center;
-    height: 100%;
-}
-
-.tarjeta-restablecer {
-    margin: auto;
+    align-items: center;
+    min-height: 100vh;
+    padding: 16px;
+  }
+  
+  .contenedor-restablecer {
     width: 100%;
     max-width: 400px;
-    --background: #ffffff;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    margin: 0 auto;
+  }
+  
+  .tarjeta-restablecer {
+    background-color: var(--color-tarjeta);
+    color: var(--color-texto);
     border-radius: 12px;
-}
-
-ion-card-title {
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 16px;
+  }
+  
+  .tarjeta-restablecer ion-card-title {
     font-size: 1.4rem;
+    font-weight: bold;
     text-align: center;
-    color: #333;
-}
-
-ion-card-subtitle {
+    margin-bottom: 8px;
+  }
+  
+  .tarjeta-restablecer ion-card-subtitle {
+    font-size: 0.9rem;
+    text-align: center;
+    color: var(--color-subtitulo);
+    margin-bottom: 16px;
+  }
+  
+  .campo-email ion-input {
+    color: var(--color-texto);
+    background: var(--color-fondo);
+    border: 1px solid var(--color-subtitulo);
+    border-radius: 8px;
+    padding: 12px;
     font-size: 1rem;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
+  .boton-restablecer {
+    margin-top: 16px;
+    background-color: var(--color-boton);
+    color: var(--color-boton-texto);
+    border-radius: 8px;
+    font-size: 1rem;
+    padding: 12px;
     text-align: center;
-    color: #666;
-}
-
-ion-item {
-    --background: transparent;
-    margin-bottom: 15px;
-}
-
-ion-input {
-    --padding-start: 10px;
-    --border-radius: 8px;
-    border: 1px solid #ddd;
-}
-
-/* Modo claro */
-@media (prefers-color-scheme: light) {
-    ion-input {
-        --background: #ffffff;
-        --color: #000000;
-    }
-    
-    ion-input::placeholder {
-        color: #999;
-    }
-    
-    ion-item {
-        --background: #ffffff;
-    }
-
-    ion-button {
-        --background: black;
-    }
-
-    a {
-        color: black;
-    }
-}
-
-/* Modo oscuro */
-@media (prefers-color-scheme: dark) {
-    .fondo-restablecer {
-        --background: #000000;
-    }
-    
+    display: block;
+    width: 100%;
+  }
+  
+  .boton-restablecer:disabled {
+    opacity: 0.6;
+  }
+  
+  .texto-adicional {
+    margin-top: 20px;
+    font-size: 0.9rem;
+    text-align: center;
+  }
+  
+  .enlace-iniciar-sesion {
+    color: var(--color-enlace);
+    text-decoration: none;
+  }
+  
+  .enlace-iniciar-sesion:hover {
+    text-decoration: underline;
+  }
+  
+  /* Media Queries para responsividad */
+  @media (max-width: 480px) {
     .tarjeta-restablecer {
-        --background: #222222;
+      padding: 12px;
     }
-
-    ion-card-title {
-        color: #ffffff;
+  
+    .tarjeta-restablecer ion-card-title {
+      font-size: 1.2rem;
     }
-
-    ion-card-subtitle {
-        color: #bbbbbb;
+  
+    .campo-email ion-input {
+      font-size: 0.9rem;
     }
-
-    ion-input {
-        --background: #333333;
-        --color: #ffffff;
+  
+    .boton-restablecer {
+      font-size: 0.9rem;
+      padding: 10px;
     }
-    
-    ion-input::placeholder {
-        color: #888;
+  
+    .texto-adicional {
+      font-size: 0.8rem;
     }
-    
-
-    ion-button {
-        --background: #ffffff;
+  }
+  
+  @media (max-width: 360px) {
+    .campo-email ion-input {
+      padding: 10px;
     }
-
-    a {
-        color: #ffffff;
+  
+    .boton-restablecer {
+      padding: 8px;
     }
-}
+  }
+  

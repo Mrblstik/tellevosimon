@@ -39,7 +39,7 @@ export class RegistroUsuarioPage implements OnInit {
         this.utilsService.presentToast({
           message: 'Vehículo registrado correctamente',
           duration: 3000,
-          color: 'success',
+          color: 'primary',
           position: 'top'
         });
       } catch (error) {

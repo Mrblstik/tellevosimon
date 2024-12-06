@@ -57,7 +57,7 @@ export class InicioSesionPage implements OnInit {
         this.form.reset()
 
         this.utilsSvc.presentToast({
-          message: `Bienvenido ${user.name}`,
+          message: `buenos dias señor ${user.name}`,
           duration: 1500,
           color: 'primary',
           position: 'top',

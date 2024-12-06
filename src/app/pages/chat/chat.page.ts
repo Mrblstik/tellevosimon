@@ -33,9 +33,9 @@ export class ChatPage implements OnInit {
 
   sendMessage() {
     if (this.newMessage) {
-      const user = this.userDisplayName || 'Usuario'; // Utiliza el nombre del usuario o 'Usuario' por defecto
+      const user = this.userDisplayName || 'Usuario'; 
       this.chatService.sendMessage(this.viajeId, user, this.newMessage);
-      this.newMessage = ''; // Limpiar el input
+      this.newMessage = ''; 
     }
   }
 }
